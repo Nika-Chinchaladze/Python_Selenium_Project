@@ -1,4 +1,7 @@
 __pycache__/
 .pytest_cache/
+pytest_report.html
+pytest_report.xml
 .env/
 venv/
+assets/

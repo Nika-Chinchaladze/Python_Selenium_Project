@@ -29,7 +29,7 @@ jobs:
         pip install webdriver-manager
     
     - name: Run Selenium Tests
-      run: pytest tests/ --verbose
+      run: pytest tests/ -m regression --verbose --html=pytest_report.html --junitxml=pytest_report.xml
 
     - name: Upload test results
       if: always()
@@ -39,4 +39,3 @@ jobs:
         path: |
           pytest_report.html
           pytest_report.xml
-          
