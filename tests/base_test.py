@@ -10,6 +10,7 @@ class BaseTest:
     def setup(self, request):
         chrome_options = Options()
         chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--headless')
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
         self.driver.maximize_window()
         self.home_page = HomePage(self.driver)
