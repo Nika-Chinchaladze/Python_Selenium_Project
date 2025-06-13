@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Literal, Set
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
@@ -76,3 +76,34 @@ class Actions(BaseHelp):
     def send_keys_to_alert(self, prompt_text: str) -> None:
         alert = self.waiter().until(expected_conditions.alert_is_present())
         alert.send_keys(prompt_text)
+    
+    def switch_to_frame_by_string_id(self, string_id: str) -> None:
+        self.driver.switch_to.frame(string_id)
+    
+    def switch_to_frame_by_index(self, index: int) -> None:
+        self.driver.switch_to.frame(index)
+    
+    def switch_to_frame_by_web_element(self, locator: By) -> None:
+        self.driver.switch_to.frame(self.find(locator))
+
+    def switch_from_frame_to_parent(self) -> None:
+        self.driver.switch_to.parent_frame()
+    
+    def switch_from_frame_to_document(self) -> None:
+        self.driver.switch_to.default_content()
+    
+    def store_original_window(self) -> str:
+        return self.driver.current_window_handle
+
+    def switch_to_new_window(self, original_window: str) -> None:
+        window_handles: Set[str] = self.driver.window_handles
+        for handle in window_handles:
+            if not handle == original_window:
+                self.driver.switch_to.window(handle)
+                break
+    
+    def switch_back_to_original_window(self, original_window: str) -> None:
+        self.driver.switch_to.window(original_window)
+    
+    def get_element_attribute_value(self, locator: By, attribute_name: str) -> str:
+        return self.find(locator).get_attribute(attribute_name)

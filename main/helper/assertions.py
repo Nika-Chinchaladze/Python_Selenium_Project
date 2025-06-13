@@ -1,6 +1,8 @@
 from typing import List, Tuple
 from selenium import webdriver
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
 from main.helper.base_help import BaseHelp
 
 class Assertions(BaseHelp):
@@ -30,4 +32,19 @@ class Assertions(BaseHelp):
     
     def verify_element_has_value(self, locator: By, value: str) -> bool:
         return value in self.find(locator).get_attribute('value')
+    
+    def verify_element_is_selected(self, locator: By) -> bool:
+        return self.find(locator).is_selected()
+    
+    def verify_drop_down_selected_element(self, locator: By, element_content: str) -> bool:
+        all_selected_elements: List[WebElement] = self.find_drop_down(locator).all_selected_options
+        all_selected_text_content: List[str] = [element.text for element in all_selected_elements]
+        return element_content in all_selected_text_content
+        
+    def verify_alert_by_text_content(self, alert_text: str) -> bool:
+        alert = self.waiter().until(expected_conditions.alert_is_present())
+        return alert.text == alert_text
 
+    def verify_attribute_value(self, locator: By, attribute_name: str, attribute_value: str) -> bool:
+        return self.find(locator).get_attribute(attribute_name) == attribute_value
+    
