@@ -17,7 +17,7 @@ class Waiters(BaseHelp):
             print("Delay interrupted")
     
     def wait_for_new_tab(self, timeout: int = 10) -> None:
-        WebDriverWait(self.driver, 10).until(lambda driver: len(driver.window_handles) > 1)
+        WebDriverWait(self.driver, timeout).until(lambda driver: len(driver.window_handles) > 1)
     
     def explicit_waiter(self, timeout: int = 10) -> WebDriverWait:
         return WebDriverWait(self.driver, timeout)

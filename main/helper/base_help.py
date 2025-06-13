@@ -2,6 +2,7 @@ from typing import Tuple
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait
 
 class BaseHelp:
     def __init__(self, driver: webdriver.Chrome):
@@ -16,3 +17,6 @@ class BaseHelp:
     
     def find_drop_down(self, locator: By):
         return Select(self.find(locator))
+
+    def waiter(self) -> WebDriverWait:
+        return WebDriverWait(self.driver, 10)
